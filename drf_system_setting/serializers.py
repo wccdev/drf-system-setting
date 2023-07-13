@@ -35,15 +35,23 @@ class BaseSerializer(WCCModelSerializer):
         self.set_parent(instance, validated_data)
         return instance
 
-    def to_representation(self, instance):
-        ret = super().to_representation(instance)
-        if not ret["tree_path"]:
-            ret["tree_path"] = instance._tree_path
-        return ret
+    # def to_representation(self, instance):
+    #     ret = super().to_representation(instance)
+    #     if not ret["tree_path"]:
+    #         ret["tree_path"] = instance._tree_path
+    #     return ret
 
 
 class DictSerializer(BaseSerializer):
     parent_id = serializers.IntegerField(default=None, allow_null=True)
+
+    @classmethod
+    def process_queryset(cls, request, queryset):
+        return (
+            queryset.filter(status=SimpleStatus.VALID)
+            .annotate(parent_code=F("parent__code"))
+            .select_related("parent", "created_by", "updated_by")
+        )
 
     class Meta:
         model = Dict
@@ -62,9 +70,7 @@ class ButtonSerializer(serializers.ModelSerializer):
 
     @classmethod
     def process_queryset(cls, request, queryset):
-        return queryset.buttons.annotate(
-            parent_code=F("parent__code"), parent_name=F("parent__name")
-        ).order_by("sort")
+        return queryset.buttons.annotate(parent_code=F("parent__code"), parent_name=F("parent__name")).order_by("sort")
 
     class Meta:
         model = Menu

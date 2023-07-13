@@ -20,6 +20,7 @@ Skeleton project created by Cookiecutter PyPackage
 ## Requirement
 * Python 3.8, 3.9, 3.10, 3.11
 * Django 3.2, 4.0, 4.1
+* django-rest-framework
 
 ## Installation
 Install using pip...
@@ -30,14 +31,19 @@ Add `'drf_system_setting'` to your `INSTALLED_APPS` setting.
 ```python
 INSTALLED_APPS = [
     'django.contrib.admin',
-    ...
+    ...,
     'drf_system_setting',
 ]
 ```
 
-To enable access to the user interface add the url path `settings(just what ever you want)` to your `urls.py`:
+To enable access to the user interface add the url path `settings`(just what ever you want) to your `urls.py`:
 
 ```python
+from django.urls import path, include
+urlpatterns = [
+    ...,
+]
+
 urlpatterns += [
     path('settings/', include('drf_system_setting.urls', namespace='drf_system_setting'))
 ]

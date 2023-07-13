@@ -38,7 +38,9 @@ INSTALLED_APPS = [
 To enable access to the user interface add the url path `settings(just what ever you want)` to your `urls.py`:
 
 ```python
-urlpatterns += [path('settings/', include('drf_system_setting.urls', namespace='drf_system_setting'))]
+urlpatterns += [
+    path('settings/', include('drf_system_setting.urls', namespace='drf_system_setting'))
+]
 ```
 
 before running migrate:

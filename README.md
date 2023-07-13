@@ -17,9 +17,35 @@ Skeleton project created by Cookiecutter PyPackage
 * Free software: MIT
 
 
-## Features
+## Requirement
+* Python 3.8, 3.9, 3.10, 3.11
+* Django 3.2, 4.0, 4.1
 
-* TODO
+## Installation
+Install using pip...
+```bash
+pip install drf-system-setting
+```
+Add `'drf_system_setting'` to your `INSTALLED_APPS` setting.
+```python
+INSTALLED_APPS = [
+    'django.contrib.admin',
+    ...
+    'drf_system_setting',
+]
+```
+
+To enable access to the user interface add the url path `settings(just what ever you want)` to your `urls.py`:
+
+```python
+urlpatterns += [path('settings/', include('drf_system_setting.urls', namespace='drf_system_setting'))]
+```
+
+before running migrate:
+
+```bash
+python manage.py migrate drf_system_setting
+```
 
 ## Credits
 
